@@ -1,18 +1,18 @@
 import React, { Fragment } from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "../Pages/Shared/Footer/Footer";
+import NavBar from "../Pages/Shared/NavBar/NavBar";
 
 const Main = () => {
   return (
     <Fragment>
       <header>
-        <h1>This is the header</h1>
+        <NavBar />
       </header>
       <main>
         <Outlet />
       </main>
-      <footer>
-        <h2>This is the footer</h2>
-      </footer>
+      <Footer />
     </Fragment>
   );
 };
