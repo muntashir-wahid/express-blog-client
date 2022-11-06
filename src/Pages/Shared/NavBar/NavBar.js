@@ -4,7 +4,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 
 const NavBar = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
 
   return (
     <nav className="navbar bg-base-100">
