@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
+  const [error, setError] = useState("");
+  const { logInHandler } = useContext(AuthContext);
+
+  // Login handler
   const loginFormSubmitHandler = (event) => {
     event.preventDefault();
     const loginForm = event.target;
     const email = loginForm.email.value;
     const password = loginForm.password.value;
     console.log(email, password);
+
+    logInHandler(email, password)
+      .then(({ user }) => {
+        console.log(user);
+        setError("");
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   };
 
   return (
     <div className="min-h-screen w-full">
       <h2 className="text-center text-4xl mt-10 font-semibold">Please Login</h2>
-      <div className="max-w-md mt-12 mx-auto p-6 shadow-2xl rounded-xl">
+      <div className="max-w-md my-6 mx-auto p-6 shadow-2xl rounded-xl">
         <form onSubmit={loginFormSubmitHandler} className="p-2">
           <div className="form-control">
             <label className="label">
@@ -25,6 +39,7 @@ const Login = () => {
               name="email"
               placeholder="email"
               className="input input-bordered"
+              required
             />
           </div>
           <div className="form-control">
@@ -36,6 +51,7 @@ const Login = () => {
               name="password"
               placeholder="password"
               className="input input-bordered"
+              required
             />
             <label className="label">
               <Link className="label-text-alt link link-hover">
@@ -43,6 +59,7 @@ const Login = () => {
               </Link>
             </label>
           </div>
+          {error && <p className="text-red-500">{error}</p>}
           <div className="form-control mt-6">
             <button type="submit" className="btn btn-primary">
               Login

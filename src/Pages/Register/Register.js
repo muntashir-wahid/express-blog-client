@@ -114,7 +114,8 @@ const Register = () => {
               </Link>
             </span>
           </div>
-          <p className="text-red-500">{error && error}</p>
+          {error && <p className="text-red-500">{error}</p>}
+
           <div className="form-control mt-6">
             {isChecked ? (
               <button type="submit" className="btn btn-primary">
