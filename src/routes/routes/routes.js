@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         path: "home/:uid",
         element: (
           <PrivateRoute>
-            <UserBlogs />
+            <Home />
           </PrivateRoute>
         ),
       },
