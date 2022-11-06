@@ -1,7 +1,14 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Register = () => {
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  // Context
+  const { createUserHandler } = useContext(AuthContext);
+  // console.log(createUserHandler);
+
   // Check if tarms is accepted
   const checkInputRef = useRef();
   const [isChecked, setIsChecked] = useState(false);
@@ -15,12 +22,26 @@ const Register = () => {
 
   const registerFormSubmitHandler = (event) => {
     event.preventDefault();
+
+    // Collect from value upon form submission
+
     const registerForm = event.target;
     const displayName = registerForm.fullName.value;
     const photoURL = registerForm.photoURL.value;
     const email = registerForm.email.value;
     const password = registerForm.password.value;
-    console.log(displayName, photoURL, email, password);
+    // console.log(displayName, photoURL, email, password);
+
+    createUserHandler(email, password)
+      .then(({ user }) => {
+        console.log(user);
+        setError("");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error.message);
+      });
   };
 
   return (
@@ -39,6 +60,7 @@ const Register = () => {
               name="fullName"
               placeholder="fullname"
               className="input input-bordered"
+              required
             />
           </div>
           <div className="form-control">
@@ -61,6 +83,7 @@ const Register = () => {
               name="email"
               placeholder="email"
               className="input input-bordered"
+              required
             />
           </div>
           <div className="form-control">
@@ -72,6 +95,7 @@ const Register = () => {
               name="password"
               placeholder="password"
               className="input input-bordered"
+              required
             />
           </div>
           <div className="flex">
@@ -90,6 +114,7 @@ const Register = () => {
               </Link>
             </span>
           </div>
+          <p className="text-red-500">{error && error}</p>
           <div className="form-control mt-6">
             {isChecked ? (
               <button type="submit" className="btn btn-primary">
