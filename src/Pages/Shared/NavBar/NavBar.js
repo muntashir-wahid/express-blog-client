@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
+import createUserName from "../../../utilities/createUserName";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const { user, logOutHandler } = useContext(AuthContext);
-  // console.log(user);
 
   const userLogoutHandler = () => {
     logOutHandler()
@@ -41,11 +41,11 @@ const NavBar = () => {
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link>Item 1</Link>
+                <Link to={`/home/${user?.uid}`}>Home</Link>
               </li>
 
               <li>
-                <Link>Item 3</Link>
+                <Link to={`/blogs/${user?.uid}`}>My Blogs</Link>
               </li>
             </ul>
           </div>
@@ -58,10 +58,10 @@ const NavBar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal p-0">
             <li>
-              <Link>Item 1</Link>
+              <Link to={`/home/${user?.uid}`}>Home</Link>
             </li>
             <li>
-              <Link>Item 3</Link>
+              <Link to={`/blogs/${user?.uid}`}>My Blogs</Link>
             </li>
           </ul>
         </div>
@@ -79,7 +79,9 @@ const NavBar = () => {
               className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link className="justify-center">Profile</Link>
+                <Link to={`/profile/${user?.uid}`} className="justify-center">
+                  Profile
+                </Link>
               </li>
               <li>
                 <button onClick={userLogoutHandler} className="btn btn-ghost">
