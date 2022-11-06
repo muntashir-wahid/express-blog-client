@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
   const [error, setError] = useState("");
   const { logInHandler } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Login handler
   const loginFormSubmitHandler = (event) => {
@@ -14,11 +15,11 @@ const Login = () => {
     const email = loginForm.email.value;
     const password = loginForm.password.value;
     console.log(email, password);
+    setError("");
 
     logInHandler(email, password)
       .then(({ user }) => {
-        console.log(user);
-        setError("");
+        navigate(`/blogs/${user?.uid}`);
       })
       .catch((error) => {
         setError(error.message);

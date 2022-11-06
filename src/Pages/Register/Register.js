@@ -31,12 +31,12 @@ const Register = () => {
     const email = registerForm.email.value;
     const password = registerForm.password.value;
     // console.log(displayName, photoURL, email, password);
-
+    setError("");
     createUserHandler(email, password)
       .then(({ user }) => {
         console.log(user);
-        setError("");
-        navigate("/");
+
+        navigate(`/blogs/${user?.uid}`);
       })
       .catch((error) => {
         console.error(error);
