@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 
-const NewBlog = () => {
+const NewBlog = ({ onAddedNewBlog }) => {
   const { user } = useContext(AuthContext);
 
   const blogSubmitHandler = (event) => {
@@ -9,11 +9,18 @@ const NewBlog = () => {
     const blogForm = event.target;
 
     const authorName = blogForm.authorName.value;
+    const authorEmail = user?.email;
     const blogTitle = blogForm.blogTitle.value;
     const publishDate = blogForm.publishDate.value;
     const blogContent = blogForm.blog.value;
 
-    const blog = { authorName, blogTitle, publishDate, blogContent };
+    const blog = {
+      authorName,
+      authorEmail,
+      blogTitle,
+      publishDate,
+      blogContent,
+    };
 
     fetch("http://localhost:5000/api/v1/blogs", {
       method: "POST",
@@ -23,7 +30,7 @@ const NewBlog = () => {
       body: JSON.stringify(blog),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => onAddedNewBlog(data));
   };
 
   return (

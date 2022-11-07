@@ -26,6 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "home/:uid",
+        loader: () => fetch("http://localhost:5000/api/v1/blogs"),
         element: (
           <PrivateRoute>
             <Home />
